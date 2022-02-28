@@ -1,9 +1,9 @@
 import secrets
 
-from django.db import IntegrityError
+from django.shortcuts import redirect, get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import serializers, status
+from rest_framework import serializers
 
 from links.models import ShortenedLink
 
@@ -18,6 +18,11 @@ class ShortenedLinkSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'short_name': {'required': False}
         }
+
+
+def go_link(request, short_name):
+    shortened_link = get_object_or_404(ShortenedLink, short_name=short_name)
+    return redirect(shortened_link.destination)
 
 
 @api_view(['POST'])
