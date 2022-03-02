@@ -22,7 +22,7 @@
                             <button type="submit" class="btn btn-sm btn-success">Создать</button>
                         </fieldset>
                     </form>
-                    <br>
+                    <br id="after-form">
                     <label for="shorted-link">Результат</label>
                     <input type="text" class="form-control" id="shorted-link">
                 </div>
@@ -33,7 +33,34 @@
 </div>
 
 <script>
+    function insertAfter(referenceNode, newNode) {
+        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    }
+
     window.addEventListener("load", function () {
+        function removeAlert(){
+            const old_alert = document.getElementById("link-status");
+            if (old_alert !== null) {
+                console.log(old_alert);
+                old_alert.remove();
+            }
+        }
+
+        function doAlert(jsonResponse = null){
+            removeAlert();
+            const alert = document.createElement("div");
+            alert.classList.add("alert");
+            alert.classList.add("alert-danger");
+            alert.innerHTML = "<b>Что-то пошло не так</b>";
+            if (jsonResponse !== null) {
+                for(const key in jsonResponse){
+                    alert.innerHTML += "<br>" + key + ": " + jsonResponse[key]
+                }
+            }
+            alert.setAttribute("id", "link-status")
+            insertAfter(document.getElementById("after-form"), alert);
+        }
+
         function sendData() {
             console.log("test")
 
@@ -44,15 +71,16 @@
                 console.log(event.target.response)
                 const jsonResponse = JSON.parse(event.target.response);
                 if (jsonResponse.hasOwnProperty("short_url")) {
-                    document.getElementById("shorted-link").value = ["short_url"];
+                    removeAlert();
+                    document.getElementById("shorted-link").value = jsonResponse["short_url"];
                 }
                 else {
-                    alert("Что-то не так с вашим вводом" + event.target.response);
+                    doAlert(jsonResponse)
                 }
             });
 
             XHR.addEventListener("error", function (event) {
-                alert("Oops! Something went wrong.");
+                doAlert();
             });
 
             XHR.open("POST", "{% url 'make_link' %}");
