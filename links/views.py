@@ -1,6 +1,7 @@
 import secrets
 
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
+from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import serializers
@@ -9,15 +10,34 @@ from links.models import ShortenedLink
 
 
 class ShortenedLinkSerializer(serializers.ModelSerializer):
+    short_url = serializers.SerializerMethodField(read_only=True)
+
+    def get_short_url(self, shortened_link: ShortenedLink):
+        request = self.context.get('request')
+        relative_url = reverse(
+            go_link,
+            kwargs={'short_name': shortened_link.short_name}
+        )
+        return request.build_absolute_uri(relative_url)
+
     class Meta:
         model = ShortenedLink
         fields = (
             'destination',
-            'short_name'
+            'short_name',
+            'short_url'
         )
         extra_kwargs = {
             'short_name': {'required': False}
         }
+
+
+def index(request):
+    return render(
+        request,
+        template_name='index.html',
+        context={'link_serializer': ShortenedLinkSerializer}
+    )
 
 
 def go_link(request, short_name):
@@ -50,4 +70,11 @@ def make_link(request):
         short_name=short_name
     )
 
-    return Response(ShortenedLinkSerializer(new_link).data)
+    return Response(
+        ShortenedLinkSerializer(
+            new_link,
+            context={
+                'request': request
+            }
+        ).data
+    )

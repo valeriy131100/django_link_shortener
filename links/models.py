@@ -4,7 +4,7 @@ from links.validators import validate_url_exists
 
 
 class ShortenedLink(models.Model):
-    destination = models.CharField(
+    destination = models.URLField(
         verbose_name='Куда ведет',
         max_length=200,
         validators=[validate_url_exists]

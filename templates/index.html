@@ -1,0 +1,77 @@
+{% load rest_framework %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Сокращатель ссылок</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container" style="margin-top:30px">
+    <div class="col-md-12">
+        <div class="modal-dialog" style="margin-bottom:0">
+            <div class="modal-content">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Создание короткой ссылки</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" id="link-form">
+                        <fieldset>
+                            {% csrf_token %}
+                            {% render_form link_serializer %}
+                            <button type="submit" class="btn btn-sm btn-success">Создать</button>
+                        </fieldset>
+                    </form>
+                    <br>
+                    <label for="shorted-link">Результат</label>
+                    <input type="text" class="form-control" id="shorted-link">
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
+
+<script>
+    window.addEventListener("load", function () {
+        function sendData() {
+            console.log("test")
+
+            const XHR = new XMLHttpRequest();
+            const FD = new FormData(form);
+
+            XHR.addEventListener("load", function (event) {
+                console.log(event.target.response)
+                const jsonResponse = JSON.parse(event.target.response);
+                if (jsonResponse.hasOwnProperty("short_url")) {
+                    document.getElementById("shorted-link").value = ["short_url"];
+                }
+                else {
+                    alert("Что-то не так с вашим вводом" + event.target.response);
+                }
+            });
+
+            XHR.addEventListener("error", function (event) {
+                alert("Oops! Something went wrong.");
+            });
+
+            XHR.open("POST", "{% url 'make_link' %}");
+
+            XHR.send(FD);
+
+        }
+
+        // Access the form element...
+        const form = document.getElementById("link-form");
+
+        // ...and take over its submit event.
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            sendData();
+        });
+    });
+</script>
+
+</body>
+</html>
