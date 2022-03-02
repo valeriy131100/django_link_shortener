@@ -41,7 +41,6 @@
         function removeAlert(){
             const old_alert = document.getElementById("link-status");
             if (old_alert !== null) {
-                console.log(old_alert);
                 old_alert.remove();
             }
         }
@@ -62,13 +61,10 @@
         }
 
         function sendData() {
-            console.log("test")
-
             const XHR = new XMLHttpRequest();
             const FD = new FormData(form);
 
             XHR.addEventListener("load", function (event) {
-                console.log(event.target.response)
                 const jsonResponse = JSON.parse(event.target.response);
                 if (jsonResponse.hasOwnProperty("short_url")) {
                     removeAlert();
@@ -89,10 +85,8 @@
 
         }
 
-        // Access the form element...
         const form = document.getElementById("link-form");
 
-        // ...and take over its submit event.
         form.addEventListener("submit", function (event) {
             event.preventDefault();
 
