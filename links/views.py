@@ -30,7 +30,17 @@ class ShortenedLinkSerializer(serializers.ModelSerializer):
             'short_url'
         )
         extra_kwargs = {
-            'short_name': {'required': False}
+            'destination': {
+                'style': {
+                    'placeholder': 'https://example.com'
+                }
+            },
+            'short_name': {
+                'required': False,
+                'style': {
+                    'placeholder': 'Заполнять не обязательно'
+                }
+            }
         }
 
 
