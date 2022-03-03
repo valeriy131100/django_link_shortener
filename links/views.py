@@ -1,5 +1,7 @@
 import secrets
+from itertools import count
 
+from django.conf import settings
 from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse
 from rest_framework.decorators import api_view
@@ -60,8 +62,13 @@ def make_link(request):
             'short_name',
             flat=True
         )
-        while True:
-            short_name = secrets.token_urlsafe()
+        for retry in count(start=1):
+            if (retry % settings.GENERATE_SHORT_URL_MAX_RETRIES) == 0:
+                settings.GENERATE_SHORT_URL_BYTES += 1
+
+            short_name = secrets.token_urlsafe(
+                nbytes=settings.GENERATE_SHORT_URL_BYTES
+            )
             if short_name not in existed_short_names:
                 break
 

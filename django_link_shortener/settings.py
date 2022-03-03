@@ -129,3 +129,12 @@ STATIC_ROOT = BASE_DIR / 'static'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+GENERATE_SHORT_URL_BYTES = env.int(
+    'GENERATE_SHORT_URL_BYTES',
+    default=5
+)
+GENERATE_SHORT_URL_MAX_RETRIES = env.int(
+    'GENERATE_SHORT_URL_MAX_RETRIES',
+    default=5
+)

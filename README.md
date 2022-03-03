@@ -31,6 +31,8 @@ $ pip install -r requirements.txt
 * `DEBUG` - включен ли режим дебага в Django. По умолчанию - `True`.
 * `ALLOWED_HOSTS` — [см. документацию Django](https://docs.djangoproject.com/en/3.1/ref/settings/#allowed-hosts). По умолчанию - `127.0.0.1`.
 * `SECRET_KEY` - секретный ключ отвечающий за шифрование. По умолчанию - `REPLACE_ME`. 
+* `GENERATE_SHORT_URL_BYTES` - число байт используемых для генерации случайной короткой ссылки. По умолчанию - 3.
+* `GENERATE_SHORT_URL_MAX_RETRIES` - число неудачных попыток, после которого будет увеличено на единицу значение `GENERATE_SHORT_URL_BYTES`. По умолчанию - 5.
 
 ### Миграции базы данных
 Перед тем как запускать сайт нужно применить миграции базы данных. Находясь в директории django_link_shortner исполните:
