@@ -6,7 +6,12 @@
 
 ## Быстрый запуск dev-версии с помощью docker-compose
 
-Вам понадобится установленный [Docker](https://docs.docker.com/get-docker/).
+Вам понадобится установленный [Docker](https://docs.docker.com/get-docker/) и git.
+
+Склонируйте репозиторий:
+```bash
+$ git clone https://github.com/valeriy131100/django_link_shortner
+```
 
 Находясь в директории django_link_shortner исполните:
 ```bash
