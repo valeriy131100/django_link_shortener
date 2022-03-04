@@ -4,6 +4,17 @@
 
 Пример сайта доступен по адресу [short.efremov.xyz](http://short.efremov.xyz).
 
+## Быстрый запуск dev-версии с помощью docker-compose
+
+Вам понадобится установленный [Docker](https://docs.docker.com/get-docker/).
+
+Находясь в директории django_link_shortner исполните:
+```bash
+$ docker-compose build && docker-compose up -d
+```
+
+Сайт запустится по адресу [127.0.0.1:8000](http://127.0.0.1:8000).
+
 ## Установка
 Вам понадобится установленный Python 3.8+ и git.
 
