@@ -1,4 +1,4 @@
-# django_link_shortner
+# django_link_shortener
 
 Простой сайт на [Django](https://www.djangoproject.com/) и [Django REST Framework](https://www.django-rest-framework.org/) для создания сокращенных ссылок.
 
@@ -10,10 +10,10 @@
 
 Склонируйте репозиторий:
 ```bash
-$ git clone https://github.com/valeriy131100/django_link_shortner
+$ git clone https://github.com/valeriy131100/django_link_shortener
 ```
 
-Находясь в директории django_link_shortner исполните:
+Находясь в директории django_link_shortener исполните:
 ```bash
 $ docker-compose build && docker-compose up -d
 ```
@@ -25,12 +25,12 @@ $ docker-compose build && docker-compose up -d
 
 Склонируйте репозиторий:
 ```bash
-$ git clone https://github.com/valeriy131100/django_link_shortner
+$ git clone https://github.com/valeriy131100/django_link_shortener
 ```
 
 Создайте в этой папке виртуальное окружение:
 ```bash
-$ cd django_link_shortner
+$ cd django_link_shortener
 $ python3 -m venv venv
 ```
 
@@ -51,13 +51,13 @@ $ pip install -r requirements.txt
 * `GENERATE_SHORT_URL_MAX_RETRIES` - число неудачных попыток, после которого будет увеличено на единицу значение `GENERATE_SHORT_URL_BYTES`. По умолчанию - 5.
 
 ### Миграции базы данных
-Перед тем как запускать сайт нужно применить миграции базы данных. Находясь в директории django_link_shortner исполните:
+Перед тем как запускать сайт нужно применить миграции базы данных. Находясь в директории django_link_shortener исполните:
 ```bash
 $ venv/bin/python manage.py migrate
 ```
 
 ### Запуск сайта
-Находясь в директории django_link_shortner исполните:
+Находясь в директории django_link_shortener исполните:
 ```bash
 $ venv/bin/python manage.py runserver
 ```
